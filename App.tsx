@@ -1,12 +1,13 @@
-import React, { useState, useEffect, useRef } from 'react';
-import MapView, { Region } from 'react-native-maps';
-import { StyleSheet, Text, View, Dimensions, LayoutChangeEvent } from 'react-native';
+import React, { useState, useRef } from 'react';
+import MapView, { Marker, Region } from 'react-native-maps';
+import { StyleSheet, View, Dimensions, LayoutChangeEvent } from 'react-native';
 import SearchCard from './src/components/SearchCard';
 import MyLocation from './src/components/MyLocation';
 import MapType from './src/components/MapType';
 import MapTypeCard from './src/components/MapTypeCard';
 
 import * as Location from 'expo-location';
+import database from './database';
 
 const getMyLocation = async(): Promise<Region | undefined> => {
   let { status } = await Location.requestForegroundPermissionsAsync();
@@ -28,6 +29,8 @@ export default function App() {
   const [mapType, setMapType] = useState<'standard' | 'satellite' | 'terrain'>('standard');
   const mapRef = useRef<MapView>(null);
 
+  const markers = database.markers
+
   const goToMyLocation = async() => {
     const region = await getMyLocation();
     region && mapRef.current?.animateToRegion(region, 1000);
@@ -46,11 +49,19 @@ export default function App() {
         onMapReady={() => {goToMyLocation();}}
         showsMyLocationButton={false}
         mapType={mapType}
-        showsUserLocation />
+        showsUserLocation>
+          {markers.map(marker => (
+            <Marker
+              key={marker.id}
+              coordinate={marker.coordinates}
+              pinColor={marker.color}
+            />
+          ))}
+        </MapView>
         { showCard === 'search' ? (
           <SearchCard handleLayoutChange={handleLayoutChange} />
         ) : (
-          <MapTypeCard 
+          <MapTypeCard
             handleLayoutChange={handleLayoutChange}
             closeModal={() => setShowCard('search')}
             changeMapType={(mapType) => setMapType(mapType)}

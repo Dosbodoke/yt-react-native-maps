@@ -17,12 +17,15 @@
     "react-native": "0.69.6",
     "react-native-maps": "0.31.1",
     "react-native-svg": "12.3.0",
-    "react-native-web": "~0.18.7"
+    "react-native-web": "~0.18.7",
+    "supercluster": "^7.1.5",
+    "use-supercluster": "^0.4.0"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",
     "@types/react": "~18.0.14",
     "@types/react-native": "~0.69.1",
+    "@types/supercluster": "^7.1.0",
     "typescript": "~4.3.5"
   },
   "private": true

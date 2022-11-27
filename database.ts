@@ -17,11 +17,11 @@ function getRandomColor(): 'red' | 'green' {
   return Math.random() > 0.5 ? 'red' : 'green'
 }
 
-function getRandomLatitude(min = -15, max = -17) {
+function getRandomLatitude(min = -6, max = -23) {
   return Math.random() * (max - min) + min
 }
 
-function getRandomLongitude(min = -47, max = -49) {
+function getRandomLongitude(min = -40, max = -60) {
   return Math.random() * (max - min) + min
 }
 
